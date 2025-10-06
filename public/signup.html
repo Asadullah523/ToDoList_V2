@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="todo-container">
+      <div class="top-row">
+        <h1>Sign up</h1>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" placeholder="Email" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="signupBtn">Create Account</button>
+        <button id="toLogin" style="background:transparent;border:1px solid rgba(59,130,246,0.12);">Login</button>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById('toLogin').addEventListener('click', () => { window.location.href = '/login.html'; });
+      document.getElementById('signupBtn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        if(!email || !password) return alert('Enter email and password');
+        const res = await fetch('/api/auth/signup', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email, password }) });
+        const data = await res.json();
+        if(res.ok){ localStorage.setItem('token', data.token); window.location.href = '/index.html'; }
+        else alert(data.error || 'Signup failed');
+      });
+    </script>
+  </body>
+</html>
