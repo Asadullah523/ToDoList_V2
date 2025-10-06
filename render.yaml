@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: todolist-v2
+    env: node
+    region: frankfurt
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://todolist:BRPPdIR0OXe9mzHV@cluster0.mnpu4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - key: PORT
+        value: 10000
